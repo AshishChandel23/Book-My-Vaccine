@@ -98,4 +98,14 @@ public class PersonController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/get-all-person")
+    public ResponseEntity getAllPerson(){
+        try{
+            List<AddPersonResponseDto> response = personService.getAllPerson();
+            return new ResponseEntity(response, HttpStatus.FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

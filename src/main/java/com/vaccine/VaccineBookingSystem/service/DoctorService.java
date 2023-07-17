@@ -89,4 +89,22 @@ public class DoctorService {
 
         return list;
     }
+
+    public List<AddDoctorResponseDto> getAllPerson() {
+        List<Doctor> doctors = doctorRepository.findAll();
+        List<AddDoctorResponseDto> ans = new ArrayList<>();
+        for(Doctor d : doctors){
+            AddDoctorResponseDto addDoctorResponseDto = new AddDoctorResponseDto();
+            addDoctorResponseDto.setName(d.getName());
+            addDoctorResponseDto.setMessage("Doctor Id : "+d.getId()+" Doctor Email Id : "+d.getEmail());
+            AddCenterResponseDto addCenterResponseDto = new AddCenterResponseDto();
+            VaccinationCenter center = d.getCenter();
+            addCenterResponseDto.setCenterName(center.getCenterName());
+            addCenterResponseDto.setCenterType(center.getCenterType());
+            addCenterResponseDto.setAddress(center.getAddress());
+            addDoctorResponseDto.setAddCenterResponseDto(addCenterResponseDto);
+            ans.add(addDoctorResponseDto);
+        }
+        return ans;
+    }
 }

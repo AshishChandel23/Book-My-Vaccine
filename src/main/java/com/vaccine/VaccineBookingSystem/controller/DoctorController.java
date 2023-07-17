@@ -2,6 +2,7 @@ package com.vaccine.VaccineBookingSystem.controller;
 
 import com.vaccine.VaccineBookingSystem.dto.requestdto.AddDoctorRequestDto;
 import com.vaccine.VaccineBookingSystem.dto.responsedto.AddDoctorResponseDto;
+import com.vaccine.VaccineBookingSystem.dto.responsedto.AddPersonResponseDto;
 import com.vaccine.VaccineBookingSystem.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,6 +59,16 @@ public class DoctorController {
         }
         catch(Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/get-all-doctor")
+    public ResponseEntity getAllPerson(){
+        try{
+            List<AddDoctorResponseDto> response = doctorService.getAllPerson();
+            return new ResponseEntity(response, HttpStatus.FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

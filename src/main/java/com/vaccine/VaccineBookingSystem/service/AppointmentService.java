@@ -94,7 +94,7 @@ public class AppointmentService {
         BookAppointmentResponseDto bookAppointmentResponseDto = new BookAppointmentResponseDto();
         bookAppointmentResponseDto.setPersonName(savedPerson.getName());
         bookAppointmentResponseDto.setDoctorName(savedDoctor.getName());
-        bookAppointmentResponseDto.setAppointmentId(savedAppointment.getId());
+        bookAppointmentResponseDto.setAppointmentId(savedAppointment.getAppointmentId());
         bookAppointmentResponseDto.setAppointmentDate(savedAppointment.getAppointmentDate());
         bookAppointmentResponseDto.setAddCenterResponseDto(addCenterResponseDto);
 
@@ -137,6 +137,26 @@ public class AppointmentService {
             cs.setAppointmentId(app.getAppointmentId());
             cs.setAppointmentDateAndTime(app.getAppointmentDate().toString());
             ans.add(cs);
+        }
+        return ans;
+    }
+
+    public List<BookAppointmentResponseDto> getAllAppointments() {
+        List<BookAppointmentResponseDto> ans = new ArrayList<>();
+        List<Appointment> appointments = appointmentRepository.findAll();
+        for(Appointment app : appointments){
+            BookAppointmentResponseDto bookAppointmentResponseDto = new BookAppointmentResponseDto();
+            bookAppointmentResponseDto.setPersonName(app.getPerson().getName());
+            bookAppointmentResponseDto.setDoctorName(app.getDoctor().getName());
+            bookAppointmentResponseDto.setAppointmentId(app.getAppointmentId());
+            bookAppointmentResponseDto.setAppointmentDate(app.getAppointmentDate());
+
+            AddCenterResponseDto addCenterResponseDto = new AddCenterResponseDto();
+            addCenterResponseDto.setCenterName(app.getDoctor().getCenter().getCenterName());
+            addCenterResponseDto.setCenterType(app.getDoctor().getCenter().getCenterType());
+            addCenterResponseDto.setAddress(app.getDoctor().getCenter().getAddress());
+            bookAppointmentResponseDto.setAddCenterResponseDto(addCenterResponseDto);
+            ans.add(bookAppointmentResponseDto);
         }
         return ans;
     }

@@ -50,4 +50,14 @@ public class AppointmentController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/get-all-appointments")
+    public ResponseEntity getAllAppointments(){
+        try{
+            List<BookAppointmentResponseDto> response = appointmentService.getAllAppointments();
+            return new ResponseEntity(response, HttpStatus.FOUND);
+        }
+        catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

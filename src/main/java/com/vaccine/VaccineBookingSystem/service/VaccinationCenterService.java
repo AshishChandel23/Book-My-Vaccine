@@ -7,6 +7,9 @@ import com.vaccine.VaccineBookingSystem.repository.VaccinationCenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class VaccinationCenterService {
 
@@ -28,5 +31,19 @@ public class VaccinationCenterService {
         addCenterResponseDto.setAddress(savedCenter.getAddress());
 
         return addCenterResponseDto;
+    }
+
+    public List<AddCenterResponseDto> getAllVaccinationCenter() {
+        List<AddCenterResponseDto> ans = new ArrayList<>();
+        List<VaccinationCenter> vaccinationCenters = vaccinationCenterRepository.findAll();
+        for(VaccinationCenter vc : vaccinationCenters){
+            AddCenterResponseDto addCenterResponseDto = new AddCenterResponseDto();
+            addCenterResponseDto.setCenterName(vc.getCenterName());
+            addCenterResponseDto.setCenterType(vc.getCenterType());
+            addCenterResponseDto.setAddress(vc.getAddress());
+
+            ans.add(addCenterResponseDto);
+        }
+        return ans;
     }
 }

@@ -14,7 +14,7 @@ public class BookAppointmentResponseDto {
 
     String personName;
     String doctorName;
-    int appointmentId;
+    String appointmentId;
     Date appointmentDate;
 
     AddCenterResponseDto addCenterResponseDto;

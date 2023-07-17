@@ -83,4 +83,16 @@ public class PersonService {
 
         return list;
     }
+
+    public List<AddPersonResponseDto> getAllPerson() {
+        List<Person> persons = personRepository.findAll();
+        List<AddPersonResponseDto> ans = new ArrayList<>();
+        for(Person p : persons){
+            AddPersonResponseDto addPersonResponseDto = new AddPersonResponseDto();
+            addPersonResponseDto.setName(p.getName());
+            addPersonResponseDto.setMessage("Person Id : "+p.getId()+" Person Email : "+p.getEmailId());
+            ans.add(addPersonResponseDto);
+        }
+        return ans;
+    }
 }
