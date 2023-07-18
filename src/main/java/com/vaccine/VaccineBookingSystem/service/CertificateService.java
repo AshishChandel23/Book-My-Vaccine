@@ -4,6 +4,7 @@ import com.vaccine.VaccineBookingSystem.dto.responsedto.AddPersonResponseDto;
 import com.vaccine.VaccineBookingSystem.dto.responsedto.CertificateResponse;
 import com.vaccine.VaccineBookingSystem.exception.CertificateAlreadyGenerated;
 import com.vaccine.VaccineBookingSystem.exception.Dose1NotTaken;
+import com.vaccine.VaccineBookingSystem.exception.Dose2NotTaken;
 import com.vaccine.VaccineBookingSystem.exception.PersonNotFoundException;
 import com.vaccine.VaccineBookingSystem.model.Certificate;
 import com.vaccine.VaccineBookingSystem.model.Person;
@@ -35,7 +36,7 @@ public class CertificateService {
             throw new Dose1NotTaken("Person doesn't taken Dose 1 yet...!");
         }
         if(!person.isDose2Taken()){
-            throw new Dose1NotTaken("Person doesn't taken Dose 2 yet...!");
+            throw new Dose2NotTaken("Person doesn't taken Dose 2 yet...!");
         }
         if(person.getCertificate()!=null){
             throw new CertificateAlreadyGenerated("Certificate Already generated for that person Id");

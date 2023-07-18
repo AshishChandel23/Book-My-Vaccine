@@ -32,7 +32,7 @@ public class AppointmentController {
     @GetMapping("/get-all-appointments-of-doctor")
     public ResponseEntity getAllAppointmentsOfDoctor(@RequestParam("doctorId") int id){
         try{
-            List<Object> response = appointmentService.getAllAppointmentsOfDoctor(id);
+            List<BookAppointmentResponseDto> response = appointmentService.getAllAppointmentsOfDoctor(id);
             return new ResponseEntity(response, HttpStatus.FOUND);
         }
         catch (Exception e){
@@ -43,7 +43,7 @@ public class AppointmentController {
     @GetMapping("/get-all-appointments-of-person")
     public ResponseEntity getAllAppointmentsOfPerson(@RequestParam("personId") int id){
         try{
-            List<Object> response = appointmentService.getAllAppointmentsOfPerson(id);
+            List<BookAppointmentResponseDto> response = appointmentService.getAllAppointmentsOfPerson(id);
             return new ResponseEntity(response, HttpStatus.FOUND);
         }
         catch (Exception e){

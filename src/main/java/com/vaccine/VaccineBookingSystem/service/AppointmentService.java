@@ -101,42 +101,51 @@ public class AppointmentService {
         return bookAppointmentResponseDto;
     }
 
-    public List<Object> getAllAppointmentsOfDoctor(int id) {
+    public List<BookAppointmentResponseDto> getAllAppointmentsOfDoctor(int id) {
         Optional<Doctor> doctorOptional = doctorRepository.findById(id);
 
         if(doctorOptional.isEmpty()) throw new DoctorNotFoundException("Doctor Id is Invalid");
 
         Doctor doctor =  doctorOptional.get();
         List<Appointment> appointmentList = appointmentRepository.findBYDoctorId(id);
-        List<Object> ans = new ArrayList<>();
+        List<BookAppointmentResponseDto> ans = new ArrayList<>();
         for(Appointment app : appointmentList){
-            Custom cs = new Custom();
-            cs.setDoctorName(doctor.getName());
-            cs.setAppointmentId(app.getAppointmentId());
-            cs.setAppointmentDateAndTime(app.getAppointmentDate().toString());
-            ans.add(cs);
+            BookAppointmentResponseDto bookAppointmentResponseDto = new BookAppointmentResponseDto();
+            bookAppointmentResponseDto.setPersonName(app.getPerson().getName());
+            bookAppointmentResponseDto.setDoctorName(doctor.getName());
+            bookAppointmentResponseDto.setAppointmentId(app.getAppointmentId());
+            bookAppointmentResponseDto.setAppointmentDate(app.getAppointmentDate());
+
+            AddCenterResponseDto addCenterResponseDto = new AddCenterResponseDto();
+            addCenterResponseDto.setCenterName(doctor.getCenter().getCenterName());
+            addCenterResponseDto.setCenterType(doctor.getCenter().getCenterType());
+            addCenterResponseDto.setAddress(doctor.getCenter().getAddress());
+            bookAppointmentResponseDto.setAddCenterResponseDto(addCenterResponseDto);
+            ans.add(bookAppointmentResponseDto);
         }
         return ans;
     }
-    public List<Object> getAllAppointmentsOfPerson(int id) {
+    public List<BookAppointmentResponseDto> getAllAppointmentsOfPerson(int id) {
         Optional<Person> personOptional = personRepository.findById(id);
 
         if(personOptional.isEmpty()) throw new PersonNotFoundException("Person Id is Invalid");
 
         Person person = personOptional.get();
         List<Appointment> appointmentList = appointmentRepository.findBYPersonId(id);
-        List<Object> ans = new ArrayList<>();
+        List<BookAppointmentResponseDto> ans = new ArrayList<>();
         for(Appointment app : appointmentList){
-//            Object obj = new Object(){
-//                String doctorName = person.getName();
-//                String appointmentDateAndTime = app.getAppointmentDate().toString();
-//            };
-//            ans.add(obj);
-            CustomPerson cs = new CustomPerson();
-            cs.setPersonName(person.getName());
-            cs.setAppointmentId(app.getAppointmentId());
-            cs.setAppointmentDateAndTime(app.getAppointmentDate().toString());
-            ans.add(cs);
+            BookAppointmentResponseDto bookAppointmentResponseDto = new BookAppointmentResponseDto();
+            bookAppointmentResponseDto.setPersonName(person.getName());
+            bookAppointmentResponseDto.setDoctorName(app.getDoctor().getName());
+            bookAppointmentResponseDto.setAppointmentId(app.getAppointmentId());
+            bookAppointmentResponseDto.setAppointmentDate(app.getAppointmentDate());
+
+            AddCenterResponseDto addCenterResponseDto = new AddCenterResponseDto();
+            addCenterResponseDto.setCenterName(app.getDoctor().getCenter().getCenterName());
+            addCenterResponseDto.setCenterType(app.getDoctor().getCenter().getCenterType());
+            addCenterResponseDto.setAddress(app.getDoctor().getCenter().getAddress());
+            bookAppointmentResponseDto.setAddCenterResponseDto(addCenterResponseDto);
+            ans.add(bookAppointmentResponseDto);
         }
         return ans;
     }
@@ -159,68 +168,6 @@ public class AppointmentService {
             ans.add(bookAppointmentResponseDto);
         }
         return ans;
-    }
-}
-class CustomPerson{
-    private String personName;
-
-    private String appointmentId;
-
-    public String getAppointmentId() {
-        return appointmentId;
-    }
-
-    public void setAppointmentId(String appointmentId) {
-        this.appointmentId = appointmentId;
-    }
-
-    private String appointmentDateAndTime;
-
-
-    public String getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(String doctorName) {
-        this.personName = doctorName;
-    }
-
-    public String getAppointmentDateAndTime() {
-        return appointmentDateAndTime;
-    }
-
-    public void setAppointmentDateAndTime(String appointmentDateAndTime) {
-        this.appointmentDateAndTime = appointmentDateAndTime;
-    }
-}
-class Custom{
-    private String doctorName;
-    private String appointmentId;
-
-    public String getAppointmentId() {
-        return appointmentId;
-    }
-
-    public void setAppointmentId(String appointmentId) {
-        this.appointmentId = appointmentId;
-    }
-
-    private String appointmentDateAndTime;
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
-    }
-
-    public String getAppointmentDateAndTime() {
-        return appointmentDateAndTime;
-    }
-
-    public void setAppointmentDateAndTime(String appointmentDateAndTime) {
-        this.appointmentDateAndTime = appointmentDateAndTime;
     }
 }
 
